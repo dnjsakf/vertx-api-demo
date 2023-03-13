@@ -7,11 +7,8 @@ import java.util.Set;
 
 import org.apache.http.HttpException;
 
-import io.netty.util.internal.logging.InternalLoggerFactory;
-import io.netty.util.internal.logging.Log4JLoggerFactory;
 import io.vertx.circuitbreaker.CircuitBreaker;
 import io.vertx.circuitbreaker.CircuitBreakerOptions;
-import io.vertx.core.AbstractVerticle;
 import io.vertx.core.CompositeFuture;
 import io.vertx.core.Future;
 import io.vertx.core.Vertx;
@@ -33,9 +30,9 @@ import io.vertx.servicediscovery.ServiceDiscoveryOptions;
 import io.vertx.servicediscovery.types.HttpEndpoint;
 
 
-public class ApiCommonVerticle extends AbstractVerticle {
+public class MainVerticle extends io.vertx.core.AbstractVerticle {
     
-    private static Logger logger = LoggerFactory.getLogger(ApiCommonVerticle.class);
+    private static Logger logger = LoggerFactory.getLogger(MainVerticle.class);
 
     private static final String SERVICE_NAME = "api-coomon";
     
@@ -47,7 +44,7 @@ public class ApiCommonVerticle extends AbstractVerticle {
         try {
             new Launcher().dispatch(new String[] {
                     "run",
-                    "java:" + ApiCommonVerticle.class.getCanonicalName()
+                    "java:" + MainVerticle.class.getCanonicalName()
             });
 
         } catch (Exception e) {

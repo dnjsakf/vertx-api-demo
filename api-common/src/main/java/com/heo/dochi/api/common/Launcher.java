@@ -2,13 +2,16 @@ package com.heo.dochi.api.common;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Set;
 
+import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.heo.dochi.api.common.annotations.RestVerticle;
 
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Vertx;
@@ -21,6 +24,7 @@ public class Launcher extends io.vertx.core.Launcher {
     
     private static String ACTIVE_MODE;
     private static Vertx vertx;
+    private static Set<Class<?>> annotatedRestClass;
 
     static {
         ACTIVE_MODE = System.getProperty("spring.profiles.active", "local");
@@ -28,6 +32,13 @@ public class Launcher extends io.vertx.core.Launcher {
     
     public static void main(String[] args) {
         new Launcher().dispatch(args);
+    }
+    
+    public static Vertx getVertx() {
+        return vertx;
+    }
+    public static Set<Class<?>> getRestAnnotations() {
+        return annotatedRestClass;
     }
     
     @Override
@@ -53,6 +64,10 @@ public class Launcher extends io.vertx.core.Launcher {
         strb.append("\n>>> vertx sharedData : " + vertx.sharedData());
 
         logger.debug(strb.toString());
+        
+
+        Reflections reflections = new Reflections("com.heo.dochi");
+        annotatedRestClass = reflections.getTypesAnnotatedWith(RestVerticle.class);
 
     }
     
