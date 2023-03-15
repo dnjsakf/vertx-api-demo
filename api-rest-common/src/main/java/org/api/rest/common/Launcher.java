@@ -4,7 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.api.rest.common.abs.AbstractRestVerticle;
-import org.api.rest.common.abs.SubRestVerticle;
+import org.api.rest.common.abs.EventBusSubVerticle;
+import org.api.rest.common.abs.RestSubVerticle;
+import org.api.rest.common.annotation.EventBusVerticle;
 import org.api.rest.common.annotation.RestVerticle;
 import org.reflections.Reflections;
 
@@ -26,6 +28,7 @@ public class Launcher extends io.vertx.core.Launcher {
     private Vertx vertx;
     private Router router;
     public static Set<Class<?>> annotatedRestVerticle;
+    public static Set<Class<?>> annotatedEventBusVerticle;
     
     /**
      * Launcher가 실행될 때, vertx 및 router 를 저장
@@ -57,7 +60,8 @@ public class Launcher extends io.vertx.core.Launcher {
         
         // Annotated Class Reflections
         Reflections clazz = new Reflections("org.api.rest");
-        annotatedRestVerticle = clazz.getTypesAnnotatedWith(RestVerticle.class);
+        annotatedRestVerticle = clazz.getTypesAnnotatedWith(RestVerticle.class); // Rest Route 처리용
+        annotatedEventBusVerticle = clazz.getTypesAnnotatedWith(EventBusVerticle.class); // EventBus 처리용
         
         // Deploying Sub Verticles
         DeploymentOptions subDeployOptions = new DeploymentOptions();
@@ -66,7 +70,8 @@ public class Launcher extends io.vertx.core.Launcher {
         
         AbstractRestVerticle.setRouter(router);
         
-         vertx.deployVerticle(new SubRestVerticle(router), subDeployOptions);
+        vertx.deployVerticle(new RestSubVerticle(router), subDeployOptions);
+        vertx.deployVerticle(new EventBusSubVerticle(), subDeployOptions);
     }
     
     /**

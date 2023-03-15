@@ -3,7 +3,6 @@ package org.api.rest.common;
 import org.api.rest.common.abs.AbstractRestVerticle;
 
 import io.vertx.core.Future;
-import io.vertx.ext.web.Router;
 
 public class MainRestVerticle extends AbstractRestVerticle {
     
