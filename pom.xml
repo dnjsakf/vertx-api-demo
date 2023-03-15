@@ -79,6 +79,7 @@
   
   <modules>
 	<module>api-common</module>
+	<module>api-rest-common</module>
   </modules>
   
 </project>
