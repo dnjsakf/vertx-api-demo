@@ -46,6 +46,7 @@
       <artifactId>vertx-circuit-breaker</artifactId>
     </dependency>
     <!-- Vert.x -->
+    
     <!-- JDBC: MySQL -->
     <dependency>
       <groupId>mysql</groupId>
@@ -61,6 +62,7 @@
       <version>20160212</version>
     </dependency>
     <!-- Jackson -->
+    
     <!-- reflections -->
     <dependency>
       <groupId>org.reflections</groupId>
@@ -68,6 +70,7 @@
       <version>0.9.11</version>
     </dependency>
     <!-- reflections -->
+    
     <!-- Redis -->
     <dependency>
       <groupId>redis.clients</groupId>
@@ -75,6 +78,7 @@
       <version>${jedis.version}</version>
     </dependency>
     <!-- Redis -->
+    
   </dependencies>
   
   <modules>

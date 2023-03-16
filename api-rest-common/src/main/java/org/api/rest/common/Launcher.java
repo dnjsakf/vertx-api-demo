@@ -20,6 +20,12 @@ import io.vertx.ext.web.handler.CorsHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 
 public class Launcher extends io.vertx.core.Launcher {
+    
+    private static String HOST;
+    
+    static {
+        HOST = "127.0.0.1";
+    }
 
     public static void main(String[] args) {
         new Launcher().dispatch(args); // run java:MainClass
@@ -29,6 +35,13 @@ public class Launcher extends io.vertx.core.Launcher {
     private Router router;
     public static Set<Class<?>> annotatedRestVerticle;
     public static Set<Class<?>> annotatedEventBusVerticle;
+    
+    public static void setHost(String host) {
+        HOST = host;
+    }
+    public static String getHost() {
+        return HOST;
+    }
     
     /**
      * Launcher가 실행될 때, vertx 및 router 를 저장
@@ -48,7 +61,6 @@ public class Launcher extends io.vertx.core.Launcher {
      */
     @Override
     public void beforeDeployingVerticle(DeploymentOptions deploymentOptions) {
-
         // Default Handlers Settings
         router.route().handler(BodyHandler.create());
         router.route().handler(CookieHandler.create());
